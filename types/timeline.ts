@@ -3,6 +3,7 @@ export interface TimelineCard {
   photo: string; // path to photo
   caption: string;
   date?: string; // optional specific date within the month
+  isSpecial?: boolean; // NEW: marks special memories with a badge
 }
 
 export interface TimelineMonth {
