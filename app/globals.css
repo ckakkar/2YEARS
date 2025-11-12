@@ -16,6 +16,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  cursor: url('/cursor-heart.svg') 10 10, auto;
 }
 
 html {
@@ -33,6 +34,23 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   position: relative;
+}
+
+/* Custom heart cursor for interactive elements */
+a, button, [role="button"], [onclick] {
+  cursor: url('/cursor-heart.svg') 10 10, pointer;
+}
+
+/* Keep text cursor for text inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="search"],
+input[type="url"],
+input[type="tel"],
+textarea,
+[contenteditable="true"] {
+  cursor: text;
 }
 
 /* Noise texture overlay for depth */
