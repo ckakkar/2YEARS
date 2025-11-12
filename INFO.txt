@@ -1,0 +1,47 @@
+OVERALL CONCEPT:
+A scrollable/swipeable timeline website documenting my 2-year relationship, showing all the highlights us having been together.
+STRUCTURE:
+	•	Opening page: “Happy Anniversary” landing page with Rose’s name
+	•	25 month sections: November 2023 through November 2025 (one section per month)
+	•	5-10 cards per month: Each card contains 1 photo + your written story/caption about that moment
+	•	Total content: Approximately 125-250 individual cards you’ll fill with photos and write-ups
+	•	Linear flow: User swipes/scrolls up through time chronologically
+VISUAL DESIGN:
+	•	Aesthetic: Minimalistic and clean
+	•	Color scheme: Dark background with pastel purple accents (her favorite color)
+	•	Animations: Nice, smooth, good quality animations throughout
+	•	Mobile-optimized: Built primarily for swipe gestures on phone
+SPECIAL FEATURES:
+	1.	Star Constellation Maps:
+	•	Displayed as background overlays on specific important dates
+	•	Initial dates to include:
+	•	Nov 13, 2023 (started dating - my anniversary)
+	•	Nov 16, 2023
+	•	Dec 1, 2023
+	•	Dec 24, 2023
+	•	Feb 4, 2024
+	•	Ability to add more constellation dates later
+1.	Music:
+	•	Background music that plays throughout
+	•	Mute/unmute toggle button
+	•	I’ll add my own song file
+	1.	Pet Names:
+	•	Use “Rose” as main name plus sprinkle in: angel, kutty baby, puu, puttu, puchu, love, dummy baby
+	1.	Navigation:
+	•	Swipe gestures (not just scroll)
+	•	Smooth transitions between cards
+	•	Works on both mobile and desktop
+WHAT I NEED TO PROVIDE:
+	•	2-12 photos per month (so roughly 50-300 total photos)
+	•	Written captions/stories for each photo card
+	•	One music file (my chosen song)
+	•	Star map images or coordinates for those key dates
+WHAT I’LL PROVIDE:
+	•	Complete working website code-in the nextjs template provided
+	•	Detailed instructions on:
+	•	How to add/replace photos
+	•	How to write and add my captions
+	•	How to add my music file
+	•	How to add star constellation backgrounds
+	•	How to adjust number of cards per month
+	•	How to add more special dates later

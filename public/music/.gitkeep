@@ -1,0 +1,4 @@
+# Place your background music file here
+# Name it: background-music.mp3
+# Or update the path in components/MusicPlayer.tsx
+
