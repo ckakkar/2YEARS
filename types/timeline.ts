@@ -18,4 +18,3 @@ export interface TimelineMonth {
 export interface TimelineData {
   months: TimelineMonth[];
 }
-

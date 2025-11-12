@@ -1,46 +1,5 @@
 import { TimelineData } from '@/types/timeline';
 
-// This is a template structure - you'll fill in the actual photos and captions
-export const timelineData: TimelineData = {
-  months: [
-    {
-      month: "November 2023",
-      year: 2023,
-      monthNumber: 11,
-      cards: [
-        {
-          id: "nov-2023-1",
-          photo: "/photos/nov-2023-1.jpg",
-          caption: "Our first moment together, angel. This is where it all began.",
-          date: "November 13, 2023"
-        },
-        // Add 4-9 more cards for November 2023
-      ],
-      hasConstellation: true,
-      constellationDate: "Nov 13, 2023",
-      constellationImage: "/constellations/nov-13-2023.jpg"
-    },
-    {
-      month: "December 2023",
-      year: 2023,
-      monthNumber: 12,
-      cards: [
-        {
-          id: "dec-2023-1",
-          photo: "/photos/dec-2023-1.jpg",
-          caption: "December memories with you, love.",
-        },
-        // Add 4-9 more cards for December 2023
-      ],
-      hasConstellation: true,
-      constellationDate: "Dec 1, 2023",
-      constellationImage: "/constellations/dec-1-2023.jpg"
-    },
-    // Add months from January 2024 through November 2025
-    // Each month should have 5-10 cards
-  ]
-};
-
 // Helper function to format constellation date for display
 function formatConstellationDate(dateString: string): string {
   const [year, month, day] = dateString.split('-');
@@ -84,7 +43,7 @@ export function generateAllMonths(): TimelineData {
         month: `${monthNames[month - 1]} ${year}`,
         year,
         monthNumber: month,
-        cards: [], // You'll fill these in
+        cards: [], // You'll fill these in with actual photos and captions
         hasConstellation: !!matchingConstellation,
         constellationDate: matchingConstellation 
           ? formatConstellationDate(matchingConstellation[0])
@@ -94,6 +53,64 @@ export function generateAllMonths(): TimelineData {
     }
   }
 
+  // Add sample cards for November 2023 (starting month)
+  // REPLACE THESE WITH YOUR ACTUAL PHOTOS AND CAPTIONS
+  months[0].cards = [
+    {
+      id: "nov-2023-1",
+      photo: "/photos/nov-2023-1.jpg",
+      caption: "Our first moment together, angel. This is where our beautiful journey began.",
+      date: "November 13, 2023"
+    },
+    // Add 4-9 more cards for November 2023
+  ];
+
   return { months };
 }
 
+// Example of filled timeline data for reference
+// Uncomment and modify this when adding your actual content
+/*
+export const sampleTimelineData: TimelineData = {
+  months: [
+    {
+      month: "November 2023",
+      year: 2023,
+      monthNumber: 11,
+      cards: [
+        {
+          id: "nov-2023-1",
+          photo: "/photos/nov-2023-1.jpg",
+          caption: "Our first moment together, angel. This is where it all began, love.",
+          date: "November 13, 2023"
+        },
+        {
+          id: "nov-2023-2",
+          photo: "/photos/nov-2023-2.jpg",
+          caption: "Every day with you feels like a dream, kutty baby.",
+          date: "November 16, 2023"
+        },
+        {
+          id: "nov-2023-3",
+          photo: "/photos/nov-2023-3.jpg",
+          caption: "You make everything better, puu. Your smile lights up my world.",
+        },
+        {
+          id: "nov-2023-4",
+          photo: "/photos/nov-2023-4.jpg",
+          caption: "These moments are everything, puttu. I treasure every second.",
+        },
+        {
+          id: "nov-2023-5",
+          photo: "/photos/nov-2023-5.jpg",
+          caption: "I'm so grateful for you, puchu. You've changed my life.",
+        },
+      ],
+      hasConstellation: true,
+      constellationDate: "Nov 13, 2023",
+      constellationImage: "/constellations/nov-13-2023.jpg"
+    },
+    // Continue for all months...
+  ]
+};
+*/

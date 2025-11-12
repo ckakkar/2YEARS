@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useSpring } from 'framer-motion';
 import { TimelineData } from '@/types/timeline';
 import TimelineMonth from './TimelineMonth';
+import ScrollProgress from './Scrollprogress';
 
 interface TimelineProps {
   data: TimelineData;
@@ -10,128 +12,52 @@ interface TimelineProps {
 
 export default function Timeline({ data }: TimelineProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [touchEnd, setTouchEnd] = useState<number | null>(null);
-  const [touchStartTime, setTouchStartTime] = useState<number | null>(null);
-  const [isScrolling, setIsScrolling] = useState(false);
-  const [isSwiping, setIsSwiping] = useState(false);
-  const isScrollingRef = useRef(false);
+  const [currentSection, setCurrentSection] = useState(0);
+  const { scrollYProgress } = useScroll({
+    container: containerRef,
+  });
+  
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
 
-  // Minimum swipe distance (in pixels) - reduced for better responsiveness
-  const minSwipeDistance = 30;
-  const maxSwipeTime = 300; // Maximum time for a swipe (ms)
-
-  const onTouchStart = (e: React.TouchEvent) => {
-    setTouchEnd(null);
-    setTouchStart(e.targetTouches[0].clientY);
-    setTouchStartTime(Date.now());
-    setIsSwiping(true);
-    isScrollingRef.current = false;
-  };
-
-  const onTouchMove = (e: React.TouchEvent) => {
-    setTouchEnd(e.targetTouches[0].clientY);
-    
-    // Prevent default scrolling during swipe
-    if (touchStart !== null && Math.abs((touchStart - e.targetTouches[0].clientY)) > 10) {
-      isScrollingRef.current = true;
-    }
-  };
-
-  const onTouchEnd = () => {
-    if (!touchStart || !touchEnd || !touchStartTime) {
-      setIsSwiping(false);
-      return;
-    }
-    
-    const distance = touchStart - touchEnd;
-    const time = Date.now() - touchStartTime;
-    const velocity = Math.abs(distance) / time;
-    
-    const isUpSwipe = distance > minSwipeDistance;
-    const isDownSwipe = distance < -minSwipeDistance;
-    const isFastSwipe = velocity > 0.3; // Fast swipe threshold
-
-    if ((isUpSwipe || isDownSwipe) && (time < maxSwipeTime || isFastSwipe)) {
-      if (containerRef.current) {
-        // Find all snap points (each card)
-        const container = containerRef.current;
-        const snapPoints: number[] = [];
-        const children = container.children;
-        
-        for (let i = 0; i < children.length; i++) {
-          const child = children[i] as HTMLElement;
-          const cards = child.querySelectorAll('[class*="snap-start"]');
-          cards.forEach((card) => {
-            const cardElement = card as HTMLElement;
-            snapPoints.push(cardElement.offsetTop);
-          });
-        }
-        
-        // Find the closest snap point
-        const currentScroll = container.scrollTop;
-        let targetScroll: number;
-        
-        if (isUpSwipe) {
-          // Find next snap point
-          targetScroll = snapPoints.find(point => point > currentScroll + 50) || 
-                       snapPoints[snapPoints.length - 1];
-        } else {
-          // Find previous snap point
-          const reversedPoints = [...snapPoints].reverse();
-          targetScroll = reversedPoints.find(point => point < currentScroll - 50) || 
-                       snapPoints[0];
-        }
-        
-        // Smooth scroll to the snap point
-        container.scrollTo({
-          top: targetScroll,
-          behavior: 'smooth'
-        });
-      }
-    }
-    
-    setIsSwiping(false);
-    setTouchStart(null);
-    setTouchEnd(null);
-    setTouchStartTime(null);
-  };
-
-  // Keyboard navigation - snap to cards
+  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (containerRef.current && (e.key === 'ArrowDown' || e.key === 'ArrowUp' || e.key === 'PageDown' || e.key === 'PageUp')) {
+      if (!containerRef.current) return;
+      
+      const container = containerRef.current;
+      const sections = container.querySelectorAll('.timeline-section');
+      const currentScrollTop = container.scrollTop;
+      
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
         e.preventDefault();
-        const container = containerRef.current;
-        const snapPoints: number[] = [];
-        const children = container.children;
+        const nextSection = Array.from(sections).find(section => {
+          const element = section as HTMLElement;
+          return element.offsetTop > currentScrollTop + 10;
+        }) as HTMLElement;
         
-        for (let i = 0; i < children.length; i++) {
-          const child = children[i] as HTMLElement;
-          const cards = child.querySelectorAll('[class*="snap-start"]');
-          cards.forEach((card) => {
-            const cardElement = card as HTMLElement;
-            snapPoints.push(cardElement.offsetTop);
+        if (nextSection) {
+          container.scrollTo({
+            top: nextSection.offsetTop,
+            behavior: 'smooth'
           });
         }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        e.preventDefault();
+        const prevSection = Array.from(sections).reverse().find(section => {
+          const element = section as HTMLElement;
+          return element.offsetTop < currentScrollTop - 10;
+        }) as HTMLElement;
         
-        const currentScroll = container.scrollTop;
-        let targetScroll: number;
-        
-        if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-          targetScroll = snapPoints.find(point => point > currentScroll + 50) || 
-                       snapPoints[snapPoints.length - 1];
-        } else {
-          const reversedPoints = [...snapPoints].reverse();
-          targetScroll = reversedPoints.find(point => point < currentScroll - 50) || 
-                       snapPoints[0];
+        if (prevSection) {
+          container.scrollTo({
+            top: prevSection.offsetTop,
+            behavior: 'smooth'
+          });
         }
-        
-        container.scrollTo({
-          top: targetScroll,
-          behavior: 'smooth'
-        });
       }
     };
 
@@ -139,59 +65,130 @@ export default function Timeline({ data }: TimelineProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Track scroll position for smooth animations
+  // Track current section for navigation dots
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolling(true);
-      if (scrollTimeoutRef.current) {
-        clearTimeout(scrollTimeoutRef.current);
-      }
-      scrollTimeoutRef.current = setTimeout(() => setIsScrolling(false), 150);
+      if (!containerRef.current) return;
+      
+      const container = containerRef.current;
+      const scrollPosition = container.scrollTop;
+      const totalHeight = container.scrollHeight - container.clientHeight;
+      const scrollPercentage = scrollPosition / totalHeight;
+      
+      const sectionIndex = Math.floor(scrollPercentage * data.months.length);
+      setCurrentSection(Math.min(sectionIndex, data.months.length - 1));
     };
 
     const container = containerRef.current;
     if (container) {
       container.addEventListener('scroll', handleScroll);
-      return () => {
-        container.removeEventListener('scroll', handleScroll);
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-      };
+      return () => container.removeEventListener('scroll', handleScroll);
     }
-  }, []);
+  }, [data.months.length]);
+
+  // Quick navigation to month
+  const scrollToMonth = (index: number) => {
+    if (!containerRef.current) return;
+    
+    const container = containerRef.current;
+    const sections = container.querySelectorAll('.timeline-section');
+    const targetSection = sections[index] as HTMLElement;
+    
+    if (targetSection) {
+      container.scrollTo({
+        top: targetSection.offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   let cardIndex = 0;
 
   return (
-    <div className="relative bg-black">
+    <>
+      {/* Progress bar */}
+      <ScrollProgress progress={scaleX} />
+      
+      {/* Navigation dots */}
+      <div className="fixed right-8 top-1/2 -translate-y-1/2 z-40 hidden lg:flex flex-col gap-2">
+        {data.months.map((month, index) => (
+          <motion.button
+            key={`${month.year}-${month.monthNumber}`}
+            onClick={() => scrollToMonth(index)}
+            className={`group relative w-2 h-2 rounded-full transition-all duration-300 ${
+              currentSection === index 
+                ? 'bg-purple-400 scale-150' 
+                : 'bg-white/20 hover:bg-white/40 hover:scale-125'
+            }`}
+            whileHover={{ scale: 1.5 }}
+            whileTap={{ scale: 0.9 }}
+          >
+            <span className="absolute right-6 top-1/2 -translate-y-1/2 text-xs font-light text-white/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 whitespace-nowrap">
+              {month.month}
+            </span>
+          </motion.button>
+        ))}
+      </div>
+      
+      {/* Timeline content */}
       <div
         ref={containerRef}
-        className="h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth touch-pan-y"
+        className="h-screen overflow-y-scroll snap-y snap-mandatory scrollbar-thin scrollbar-thumb-purple-400/20 scrollbar-track-transparent"
         style={{
           scrollBehavior: 'smooth',
           WebkitOverflowScrolling: 'touch',
           overscrollBehavior: 'contain',
         }}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
       >
         {data.months.map((month, monthIndex) => {
           const currentCardStartIndex = cardIndex;
           cardIndex += month.cards.length;
           
           return (
-            <TimelineMonth
+            <div
               key={`${month.year}-${month.monthNumber}`}
-              month={month}
-              monthIndex={monthIndex}
-              cardStartIndex={currentCardStartIndex}
-            />
+              className="timeline-section"
+            >
+              <TimelineMonth
+                month={month}
+                monthIndex={monthIndex}
+                cardStartIndex={currentCardStartIndex}
+                totalMonths={data.months.length}
+              />
+            </div>
           );
         })}
+        
+        {/* Ending screen */}
+        <motion.div 
+          className="h-screen flex items-center justify-center snap-start relative"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          viewport={{ once: true }}
+        >
+          <div className="text-center space-y-6 px-6">
+            <motion.h2 
+              className="text-6xl font-thin text-white/80"
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.2, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              To Many More Years
+            </motion.h2>
+            <motion.p 
+              className="text-xl font-extralight text-purple-200/60"
+              initial={{ y: 30, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4, duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              I love you, Rose 💜
+            </motion.p>
+          </div>
+        </motion.div>
       </div>
-    </div>
+    </>
   );
 }
-

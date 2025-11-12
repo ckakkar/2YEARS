@@ -1,8 +1,9 @@
 @import "tailwindcss";
 
 :root {
-  --background: #000000;
-  --foreground: #ffffff;
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --purple-glow: 196 181 253;
 }
 
 @theme inline {
@@ -20,6 +21,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none;
 }
 
 body {
@@ -30,29 +32,74 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  position: relative;
 }
 
-/* Custom scrollbar - invisible */
+/* Noise texture overlay for depth */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.015;
+  z-index: 1;
+  pointer-events: none;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,.02) 2px, rgba(255,255,255,.02) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(255,255,255,.01) 2px, rgba(255,255,255,.01) 4px);
+}
+
+/* Custom scrollbar - ultra thin */
 ::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
+  width: 2px;
+  background: rgba(var(--purple-glow) / 0.05);
 }
 
-/* Smooth animations */
-@keyframes pulse {
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--purple-glow) / 0.2);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--purple-glow) / 0.3);
+}
+
+/* Enhanced animations */
+@keyframes float {
   0%, 100% {
-    opacity: 1;
+    transform: translateY(0px);
   }
   50% {
-    opacity: 0.5;
+    transform: translateY(-10px);
   }
 }
 
-/* Smooth fade-in animation */
-@keyframes fadeInUp {
+@keyframes glow-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    filter: blur(20px);
+  }
+  50% {
+    opacity: 0.6;
+    filter: blur(30px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes fade-in-up {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
@@ -60,11 +107,10 @@ body {
   }
 }
 
-/* Smooth scale animation */
-@keyframes scaleIn {
+@keyframes scale-in {
   from {
     opacity: 0;
-    transform: scale(0.95);
+    transform: scale(0.92);
   }
   to {
     opacity: 1;
@@ -72,49 +118,94 @@ body {
   }
 }
 
-/* Subtle glitch effect - minimal and modern */
-@keyframes glitch {
-  0% {
-    transform: translate(0);
+@keyframes text-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
   }
-  20% {
-    transform: translate(-1px, 1px);
-  }
-  40% {
-    transform: translate(-1px, -1px);
-  }
-  60% {
-    transform: translate(1px, 1px);
-  }
-  80% {
-    transform: translate(1px, -1px);
-  }
-  100% {
-    transform: translate(0);
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-@keyframes glitch-text {
-  0%, 100% {
-    transform: translate(0);
-    text-shadow: 0 0 0 transparent;
-  }
-  25% {
-    transform: translate(-0.5px, 0.5px);
-    text-shadow: -1px 0 0 rgba(196, 181, 253, 0.3);
-  }
-  50% {
-    transform: translate(0.5px, -0.5px);
-    text-shadow: 1px 0 0 rgba(196, 181, 253, 0.3);
-  }
-  75% {
-    transform: translate(-0.5px, -0.5px);
-    text-shadow: -1px 1px 0 rgba(196, 181, 253, 0.3);
-  }
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -1%); }
+  20% { transform: translate(1%, 1%); }
+  30% { transform: translate(-1%, 1%); }
+  40% { transform: translate(1%, -1%); }
+  50% { transform: translate(-1%, 0); }
+  60% { transform: translate(1%, 0); }
+  70% { transform: translate(0, 1%); }
+  80% { transform: translate(0, -1%); }
+  90% { transform: translate(-1%, -1%); }
+}
+
+/* Glass morphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.01);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Glow effects */
+.glow-purple {
+  box-shadow: 
+    0 0 20px rgba(var(--purple-glow) / 0.15),
+    0 0 40px rgba(var(--purple-glow) / 0.1),
+    0 0 60px rgba(var(--purple-glow) / 0.05);
+}
+
+.text-glow {
+  text-shadow: 
+    0 0 10px rgba(var(--purple-glow) / 0.3),
+    0 0 20px rgba(var(--purple-glow) / 0.2),
+    0 0 30px rgba(var(--purple-glow) / 0.1);
 }
 
 /* Selection styling */
 ::selection {
-  background: rgba(196, 181, 253, 0.3);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(var(--purple-glow) / 0.3);
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Smooth image loading */
+img {
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Enhanced focus states */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(var(--purple-glow) / 0.5);
+  outline-offset: 2px;
+}
+
+/* Loading skeleton animation */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--purple-glow) / 0.05) 25%,
+    rgba(var(--purple-glow) / 0.15) 50%,
+    rgba(var(--purple-glow) / 0.05) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Magnetic cursor effect area */
+.magnetic-area {
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }

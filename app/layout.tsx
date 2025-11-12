@@ -6,11 +6,19 @@ const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
+  weight: ["100", "200", "300", "400", "500", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Happy Anniversary, Rose",
-  description: "Our journey together - A timeline of our 2-year relationship",
+  title: "Happy Anniversary, Rose 💜",
+  description: "Two years of love, laughter, and endless memories. Our journey together.",
+  keywords: "anniversary, love, timeline, memories, rose",
+  authors: [{ name: "Made with love" }],
+  openGraph: {
+    title: "Happy Anniversary, Rose",
+    description: "Our beautiful journey together",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -19,10 +27,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.variable} antialiased`}
-      >
+    <html lang="en" className="dark">
+      <body className={`${inter.variable} antialiased bg-[#0a0a0a]`}>
         {children}
       </body>
     </html>
