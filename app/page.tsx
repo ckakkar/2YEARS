@@ -11,7 +11,7 @@ export default function Home() {
   const timelineData = generateAllMonths();
 
   return (
-    <main className="relative min-h-screen bg-gradient-to-b from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
+    <main className="relative min-h-screen bg-black">
       {!showTimeline ? (
         <LandingPage onEnter={() => setShowTimeline(true)} />
       ) : (
