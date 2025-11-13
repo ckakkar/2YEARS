@@ -74,14 +74,14 @@ export function generateAllMonths(): TimelineData {
     {
       id: "nov-2023-1",
       photo: "/photos/nov-2023-1.jpg",
-      caption: "The day everything changed, angel. Our first coffee together at that little café downtown. You wore that purple sweater that made your eyes sparkle like stars.",
+      caption: "Gosh darn this beautiful chapter started right here.",
       date: "November 13, 2023",
       isSpecial: true  // Mark anniversary as special
     },
     {
       id: "nov-2023-2",
       photo: "/photos/nov-2023-2.jpg",
-      caption: "Our first sunset together, kutty baby. We talked for hours on that park bench, and I knew I never wanted those conversations to end.",
+      caption: "I was so nervous cause the night before I went to casino with my friends and I didn't wanted to wake up late and then be late to our date",
       date: "November 16, 2023"
     },
     {
@@ -97,6 +97,12 @@ export function generateAllMonths(): TimelineData {
     {
       id: "nov-2023-5",
       photo: "/photos/nov-2023-5.jpg",
+      caption: "Our first 'I love you', whispered under the stars. My heart has been yours ever since that moment, love.",
+      isSpecial: true
+    },
+    {
+      id: "nov-2023-6",
+      photo: "/photos/nov-2023-6.jpg",
       caption: "Our first 'I love you', whispered under the stars. My heart has been yours ever since that moment, love.",
       isSpecial: true
     }
