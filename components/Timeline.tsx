@@ -175,7 +175,7 @@ export default function Timeline({ data }: TimelineProps) {
               transition={{ delay: 0.2, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              To Many More Years
+              Hopefully We Find Each Other Again.
             </motion.h2>
             <motion.p 
               className="text-xl font-extralight text-purple-200/60"
@@ -184,7 +184,7 @@ export default function Timeline({ data }: TimelineProps) {
               transition={{ delay: 0.4, duration: 0.8 }}
               viewport={{ once: true }}
             >
-              I love you, Rose 💜
+              I love you always, Kanmini 💜
             </motion.p>
           </div>
         </motion.div>
