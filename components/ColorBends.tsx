@@ -185,7 +185,7 @@ export default function ColorBends({
       (renderer as THREE.WebGLRenderer & { outputColorSpace: string }).outputColorSpace = 'srgb';
     } else if ('outputEncoding' in renderer) {
       // Fallback for older Three.js versions
-      renderer.outputEncoding = THREE.sRGBEncoding;
+      (renderer as THREE.WebGLRenderer & { outputEncoding: THREE.TextureEncoding }).outputEncoding = THREE.sRGBEncoding;
     }
     
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
