@@ -43,69 +43,37 @@ export default function TimelineMonth({
         </motion.div>
       )}
 
-      {/* Month Header - FIXED: Better contrast and reduced overlay */}
-      <motion.div 
+      {/* Modern, Centered Month Header */}
+      <motion.div
         ref={headerRef}
-        className="sticky top-0 z-20 glass-dark"
+        className="sticky top-0 z-20 w-full pointer-events-none" // Full width container, allows content to be centered
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="relative overflow-hidden py-8 px-6">
-          {/* Background shimmer effect - more subtle */}
+        <div className="flex justify-center items-start pt-6">
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-purple-400/3 to-transparent"
-            animate={{
-              x: ['-100%', '100%'],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              repeatDelay: 3,
-              ease: "linear",
-            }}
-          />
-          
-          <div className="relative max-w-6xl mx-auto">
-            <div className="flex items-center justify-between">
-              <div className="space-y-1">
-                <motion.h2 
-                  className="text-3xl md:text-4xl font-thin text-white/90 tracking-wide" // FIXED: Better opacity
-                  initial={{ x: -30, opacity: 0 }}
-                  animate={{ x: 0, opacity: isInView ? 1 : 0.5 }} // FIXED: Better visibility when not in view
-                  transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  {month.month}
-                </motion.h2>
-                
-                {month.hasConstellation && month.constellationDate && (
-                  <motion.p 
-                    className="text-xs font-light text-purple-300/60 tracking-widest uppercase" // FIXED: Better contrast
-                    initial={{ x: -30, opacity: 0 }}
-                    animate={{ x: 0, opacity: isInView ? 1 : 0 }}
-                    transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      <span className="w-1 h-1 bg-purple-400 rounded-full animate-pulse" />
-                      {month.constellationDate}
-                    </span>
-                  </motion.p>
-                )}
-              </div>
-              
-              {/* Month progress indicator - FIXED: Better contrast */}
-              <motion.div 
-                className="text-sm font-thin text-white/40" // FIXED: Increased opacity
-                initial={{ opacity: 0 }}
-                animate={{ opacity: isInView ? 1 : 0.5 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-              >
-                <span className="text-white/60">{monthIndex + 1}</span>
-                <span className="mx-2 text-white/40">/</span>
-                <span className="text-white/40">{totalMonths}</span>
-              </motion.div>
+            className="pointer-events-auto"
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+          >
+            <div className="text-center">
+              <h2 className="text-3xl font-thin text-white tracking-wide [text-shadow:0_2px_10px_rgba(0,0,0,0.5)]">
+                {(() => {
+                  const parts = month.month.split(' ');
+                  const monthName = parts.slice(0, -1).join(' ');
+                  const year = parts[parts.length - 1];
+                  return (
+                    <>
+                      {monthName}{' '}
+                      <span className="text-purple-400">{year}</span>
+                    </>
+                  );
+                })()}
+              </h2>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.div>
 

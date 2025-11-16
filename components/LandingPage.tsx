@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState, useRef } from 'react';
-import { motion, useMotionValue, useTransform, animate, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useTransform, animate, AnimatePresence, useMotionValueEvent } from 'framer-motion';
 import ColorBends from './ColorBends';
 
 interface LandingPageProps {
@@ -11,6 +11,7 @@ interface LandingPageProps {
 export default function LandingPage({ onEnter }: LandingPageProps) {
   const [currentNameIndex, setCurrentNameIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
+  const [displayCount, setDisplayCount] = useState(0);
   const count = useMotionValue(0);
   const rounded = useTransform(count, latest => Math.round(latest));
   const cursorX = useRef(0);
@@ -27,6 +28,11 @@ export default function LandingPage({ onEnter }: LandingPageProps) {
   const startDate = new Date('2023-11-13');
   const today = new Date();
   const daysDiff = Math.floor((today.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24));
+
+  // Sync motion value to state for rendering
+  useMotionValueEvent(rounded, 'change', (latest) => {
+    setDisplayCount(latest);
+  });
 
   // Animated counter
   useEffect(() => {
@@ -95,97 +101,48 @@ export default function LandingPage({ onEnter }: LandingPageProps) {
           transition={{ delay: 0.5, duration: 0.8 }}
         >
           <div className="max-w-7xl mx-auto">
-            {/* Journey badge - More prominent */}
+            {/* Journey badge - Minimalistic */}
             <motion.div 
-              className="flex justify-center mb-8"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
+              className="flex justify-center mb-12"
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8, duration: 0.6 }}
             >
-              <div className="relative group">
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-purple-400/20 blur-2xl rounded-full scale-150 opacity-50 group-hover:opacity-70 transition-opacity duration-500" />
-                
-                {/* Badge container */}
-                <div className="relative px-6 py-3 rounded-full bg-gradient-to-r from-purple-500/5 via-purple-400/10 to-purple-500/5 backdrop-blur-md border border-purple-400/20">
-                  <div className="flex items-center gap-4">
-                    {/* Left decoration */}
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 bg-purple-400/60 rounded-full animate-pulse" />
-                      <div className="w-1 h-1 bg-purple-300/40 rounded-full animate-pulse delay-75" />
-                      <div className="w-1 h-1 bg-purple-200/30 rounded-full animate-pulse delay-150" />
-                    </div>
-                    
-                    {/* Date content */}
-                    <div className="text-center">
-                      <p className="text-xs font-light text-purple-200/60 tracking-[0.3em] uppercase mb-1">
-                        Our Journey Began
-                      </p>
-                      <p className="text-sm font-light text-purple-100/80 tracking-wider">
-                        November 13, 2023
-                      </p>
-                    </div>
-                    
-                    {/* Right decoration */}
-                    <div className="flex gap-1">
-                      <div className="w-1 h-1 bg-purple-200/30 rounded-full animate-pulse delay-150" />
-                      <div className="w-1 h-1 bg-purple-300/40 rounded-full animate-pulse delay-75" />
-                      <div className="w-1 h-1 bg-purple-400/60 rounded-full animate-pulse" />
-                    </div>
-                  </div>
-                </div>
+              <div className="text-center">
+                <p className="text-xs font-light text-white/40 tracking-[0.2em] uppercase mb-2">
+                  Our Journey Began
+                </p>
+                <p className="text-sm font-light text-white/60 tracking-wide">
+                  November 13, 2023
+                </p>
               </div>
             </motion.div>
 
-            {/* Enhanced days counter - Now prominently displayed */}
+            {/* Days counter - Minimalistic */}
             <motion.div 
-              className="text-center mb-8"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 1.2, duration: 0.8 }}
+              className="text-center mb-12"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
             >
-              <div className="relative inline-block">
-                {/* Background glow for days */}
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 via-purple-300/20 to-purple-400/10 blur-3xl scale-150" />
-                
-                {/* Days display */}
-                <div className="relative">
-                  <motion.div 
-                    className="flex items-baseline justify-center gap-3"
-                    animate={{
-                      y: [0, -5, 0],
-                    }}
-                    transition={{
-                      duration: 4,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  >
-                    <motion.span 
-                      className="text-[clamp(4rem,8vw,6rem)] font-thin text-transparent bg-clip-text bg-gradient-to-r from-purple-200 via-purple-100 to-purple-200 tabular-nums"
-                      style={{
-                        backgroundSize: '200% 100%',
-                        animation: 'aurora 8s ease infinite',
-                      }}
-                    >
-                      {rounded}
-                    </motion.span>
-                    <span className="text-2xl font-extralight text-purple-200/40">
-                      Days
-                    </span>
-                  </motion.div>
-                  
-                  {/* Subtitle */}
-                  <motion.p 
-                    className="text-xs font-light text-purple-200/40 tracking-[0.3em] uppercase mt-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 1.5, duration: 1 }}
-                  >
-                    And counting every moment
-                  </motion.p>
-                </div>
+              <div className="flex items-baseline justify-center gap-3 mb-3">
+                <span className="text-[clamp(4rem,8vw,6rem)] font-thin text-white/90 tabular-nums">
+                  {displayCount}
+                </span>
+                <span className="text-2xl font-light text-white/50">
+                  Days
+                </span>
               </div>
+              
+              {/* Subtitle */}
+              <motion.p 
+                className="text-xs font-light text-white/30 tracking-[0.2em] uppercase"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 0.8 }}
+              >
+                And counting every moment
+              </motion.p>
             </motion.div>
           </div>
         </motion.div>
@@ -278,69 +235,48 @@ export default function LandingPage({ onEnter }: LandingPageProps) {
           transition={{ delay: 2, duration: 0.8 }}
         >
           <div className="max-w-7xl mx-auto flex flex-col items-center space-y-8">
-            {/* Modern CTA button */}
+            {/* Modern minimalistic CTA button */}
             <motion.button
               onClick={onEnter}
               className="group relative"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ scale: 1.01 }}
+              whileTap={{ scale: 0.99 }}
             >
-              <div className="relative px-12 py-5">
-                {/* Dynamic background */}
-                <motion.div 
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/10 via-purple-400/10 to-purple-500/10 backdrop-blur-sm"
-                  animate={{
-                    backgroundPosition: isHovered ? '100% 50%' : '0% 50%',
-                  }}
-                  transition={{ duration: 2, ease: 'linear' }}
-                  style={{ backgroundSize: '200% 100%' }}
+              <div className="relative flex items-center space-x-3 px-1 py-2">
+                {/* Underline effect */}
+                <motion.div
+                  className="absolute bottom-0 left-0 h-[1px] bg-white/40"
+                  initial={{ width: 0 }}
+                  animate={{ width: isHovered ? '100%' : 0 }}
+                  transition={{ duration: 0.4, ease: 'easeOut' }}
                 />
-                
-                {/* Border with animation */}
-                <motion.div 
-                  className="absolute inset-0 rounded-full"
-                  style={{
-                    background: 'linear-gradient(135deg, transparent 30%, rgba(196, 181, 253, 0.3) 50%, transparent 70%)',
-                    backgroundSize: '200% 200%',
-                  }}
-                  animate={{
-                    backgroundPosition: ['0% 0%', '100% 100%'],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: 'linear',
-                  }}
-                />
-                
-                {/* Inner border */}
-                <div className="absolute inset-[1px] rounded-full bg-[#0a0a0a]/80 backdrop-blur-sm" />
                 
                 {/* Content */}
-                <div className="relative px-8 py-3 flex items-center space-x-6">
-                  <span className="text-sm font-light text-purple-100/80 tracking-[0.2em] uppercase">
-                    Begin Our Story
-                  </span>
-                  <motion.div
-                    animate={{
-                      x: isHovered ? 5 : [0, 3, 0],
-                    }}
-                    transition={{
-                      x: isHovered ? { duration: 0.2 } : { duration: 2, repeat: Infinity, ease: 'easeInOut' }
-                    }}
+                <span className="text-sm font-light text-white/70 tracking-[0.15em] uppercase">
+                  Begin Our Story
+                </span>
+                <motion.div
+                  animate={{
+                    x: isHovered ? 4 : 0,
+                    opacity: isHovered ? 1 : 0.5,
+                  }}
+                  transition={{
+                    duration: 0.3,
+                    ease: 'easeOut',
+                  }}
+                >
+                  <svg 
+                    className="w-3.5 h-3.5 text-white/60" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    stroke="currentColor"
+                    strokeWidth={1.5}
                   >
-                    <svg 
-                      className="w-4 h-4 text-purple-300/60" 
-                      fill="none" 
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </motion.div>
-                </div>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </motion.div>
               </div>
             </motion.button>
 
