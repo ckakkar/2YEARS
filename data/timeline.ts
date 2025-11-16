@@ -66,38 +66,35 @@ export function generateAllMonths(): TimelineData {
     {
       id: "nov-2023-1",
       photo: "/photos/nov-2023-1.jpg",
-      caption: "Gosh darn this beautiful chapter started right here.\n\nTwo souls, one moment, infinite possibilities.",
-      date: "November 13, 2023",
+      caption: "Gosh darn this beautiful chapter started right here.\n\nHonest to god this is the best text I ever sent.",
       isSpecial: true  // Mark anniversary as special
     },
     {
       id: "nov-2023-2",
       photo: "/photos/nov-2023-2.jpg",
-      caption: "I was so nervous cause the night before I went to casino with my friends.\n\nDidn't want to wake up late and miss a second with you.",
-      date: "November 16, 2023"
+      caption: "I remember the night before I went to casino with my friends for Diwali.\n\nDidn't want to wake up late and miss a second with you. I was even texting you that night.",
     },
     {
       id: "nov-2023-3",
       photo: "/photos/nov-2023-3.jpg",
-      caption: "Dancing in your kitchen at 2 AM, puu.\n\nNo music, just us swaying to the rhythm of our hearts beating as one.",
+      caption: "The best MF day I have ever had, the best date, the company and the best MF kiss.\n\nAND yes, I'll potek you-ALWAYS.",
+      isSpecial: true  // Mark anniversary as special
     },
     {
       id: "nov-2023-4",
       photo: "/photos/nov-2023-4.jpg",
-      caption: "You made me laugh until my sides hurt, dummy baby.\n\nThat's when I knew you weren't just beautiful - you were my kind of chaos.",
+      caption: "The first time we had sex kutty, we just got progressively better but this was the start of my cunt struck era.\n\nBTW this is the beginning of a very iconic photo pose for us.",
+      isSpecial: true
     },
     {
       id: "nov-2023-5",
       photo: "/photos/nov-2023-5.jpg",
-      caption: "Our first 'I love you', whispered under the stars.\n\nMy heart has been yours ever since that moment, love.",
-      date: "November 20, 2023",
-      isSpecial: true
+      caption: "Challamae, honestly I just loved hanging with you after meeting you once.\n\nLike for my anti-social ass, it was super weird.",
     },
     {
       id: "nov-2023-6",
       photo: "/photos/nov-2023-6.jpg",
-      caption: "Coffee dates and deep conversations.\n\nYou turned ordinary moments into extraordinary memories, angel.",
-      date: "November 25, 2023"
+      caption: "Our first time at waterfront, this day was so nice, and this hug was just perfect.\n\nBy this time, I knew you were way too perfect and I had wierd thing in me that I don't wanna fuck up.",
     }
   ];
 
@@ -106,47 +103,43 @@ export function generateAllMonths(): TimelineData {
     {
       id: "dec-2023-1",
       photo: "/photos/dec-2023-1.jpg",
-      caption: "Building our first snowman together, angel.\n\nYou insisted on giving him a purple scarf, and suddenly he was perfect - just like us.",
-      date: "December 1, 2023"
+      caption: "Periya study baby you are? I had so much shit to do this day but I couldn't keep my eyes off of you.",
     },
     {
       id: "dec-2023-2",
       photo: "/photos/dec-2023-2.jpg",
-      caption: "Christmas lights in your eyes, kutty baby.\n\nBut honestly, they couldn't compete with the way you light up my world.",
-      date: "December 24, 2023",
+      caption: "I fell for that smile so hard, I still am.\n\nThis was our first nights together, even more than sex, the sleep hit sooooo mf hard.",
       isSpecial: true
     },
     {
       id: "dec-2023-3",
       photo: "/photos/dec-2023-3.jpg",
-      caption: "New Year's Eve kiss that stopped time, puu.\n\nWhile everyone celebrated midnight, I was celebrating finding you.",
-      date: "December 31, 2023",
-      isSpecial: true
+      caption: "Denny's was such vibe this day, I remember you wanted to go out, we decided to go to denny's and after that we didn't had in us to go out anymore-so we went back home like a couple of kutty kutty babies.",
     },
     {
       id: "dec-2023-4",
       photo: "/photos/dec-2023-4.jpg",
-      caption: "Wrapping presents together at midnight, love.\n\nYou made even the most mundane tasks feel like adventures.",
+      caption: "SEE the pose and those mf EYES-I can drown to death in em and I'd be the most peaceful.",
     },
     {
       id: "dec-2023-5",
       photo: "/photos/dec-2023-5.jpg",
-      caption: "That cozy morning when we didn't leave bed, dummy baby.\n\nSometimes the best days are the ones where we do absolutely nothing together.",
+      caption: "I thought you would have been weirded out by how much I wanted to touch you right off the bat, you you kinda weird too-I loved it.",
     },
     {
       id: "dec-2023-6",
       photo: "/photos/dec-2023-6.jpg",
-      caption: "Hot chocolate and your laugh filling the room, puu.\n\nI could listen to you forever and never get tired of that sound.",
+      caption: "I loved this night, it nice to reminisce about it.\n\nI loved coming here with you, how scared initially you were to go there but shit I loved caring for you, loving you and protecting you.",
     },
     {
       id: "dec-2023-7",
       photo: "/photos/dec-2023-7.jpg",
-      caption: "Walking through the winter wonderland, angel.\n\nEvery step felt like we were creating our own fairy tale.",
+      caption: "This a start of a very very beautiful tradition.\n\nI'll continue this till the day I die.",
     },
     {
       id: "dec-2023-8",
       photo: "/photos/dec-2023-8.MOV",
-      caption: "Capturing moments in motion, love.\n\nSome memories are too beautiful to be still - they need to move, just like us.",
+      caption: "My lil kutty you look heaven sent, so mf beautiful, those curls, those eyes, those lips; those everything.\n\nBut the look you give me and my beard line-PEAK.",
     },
     {
       id: "dec-2023-9",
